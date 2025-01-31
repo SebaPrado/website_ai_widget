@@ -67,7 +67,7 @@ const ChatWidget = ({ apiKey }) => {
             </div>
             <div className="close-button_div">
               <button onClick={() => setIsOpen(false)} className="close-button">
-                x
+                --
               </button>
             </div>
           </div>
@@ -80,6 +80,7 @@ const ChatWidget = ({ apiKey }) => {
           </div>
           <div className="chat-input">
             <input
+            className="input"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={(e) => {
@@ -91,18 +92,23 @@ const ChatWidget = ({ apiKey }) => {
               placeholder="Escribe tu mensaje..."
             />
             <button
+            className="send_button"
               onClick={() => {
                 handleSendMessage(inputText);
                 setInputText("");
               }}
             >
-              Enviar
+              <div className="ia_image">
+              <img alt="image" src="/send.svg" className="send"></img>
+            </div>
             </button>
           </div>
         </div>
       ) : (
         <button className="chat-trigger" onClick={() => setIsOpen(true)}>
-          Chat con IA
+           <div className="ia_image">
+              <img alt="image" src="/ai.svg" className="home-image14"></img>
+            </div>
         </button>
       )}
     </div>
