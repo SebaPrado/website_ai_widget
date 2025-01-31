@@ -1,4 +1,6 @@
 // src/components/ChatWidget.js
+//componente principal del widget
+
 import React, { useState } from "react";
 import "../styles/widget.css";
 

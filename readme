@@ -31,4 +31,30 @@ En el sitio web del cliente :
     });
 </script>
 
-; //=============================================================//
+;=============================================================//
+
+
+Dado este contexto, te propongo una solución más modular y reutilizable usando un enfoque de widget o script incorporable. Vamos a analizarlo paso a paso:
+
+1) veamos la arquitectura general:
+
+Un script que se puede insertar en cualquier sitio web mediante una simple etiqueta, que cargará dinámicamente tu widget de chat. 
+Este enfoque nos permite mantener el control sobre el código y actualizarlo sin que los clientes necesiten hacer cambios en sus sitios.
+
+;=============================================================//
+
+
+# Inicializar el proyecto con npm
+npm init -y
+
+# Instalar las dependencias principales
+npm install react react-dom @babel/core @babel/preset-react @babel/preset-env
+npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader
+npm install --save-dev html-webpack-plugin clean-webpack-plugin
+npm install --save-dev cross-env dotenv-webpack
+
+# Crear la estructura de carpetas
+mkdir src
+mkdir src/components
+mkdir src/styles
+mkdir public
