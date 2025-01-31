@@ -3,5 +3,11 @@
       "env": {
         "NPM_CONFIG_UNSAFE_PERM": "true"
       }
-    }
+    },
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/dist/$1"
+      }
+    ]
   }

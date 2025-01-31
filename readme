@@ -60,14 +60,14 @@ En el sitio web del cliente :
 
 1) sin API : 
 
-<script src="https://tu-dominio.com/widget.js"></script>
+<script src="https://websiteaiagentwidget.vercel.app/widget.js"></script>
 <script>
     window.initAIChat();
 </script>
 
 2) CON API : 
 
-<script src="https://tu-dominio.com/widget.js"></script>
+<script src="https://websiteaiagentwidget.vercel.app/widget.js"></script>
 <script>
     window.initAIChat({
         apiKey: 'CLAVE_API_DEL_CLIENTE'
