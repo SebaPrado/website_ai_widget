@@ -58,13 +58,16 @@ const ChatWidget = ({ apiKey }) => {
       {isOpen ? (
         <div className="chat-container">
           <div className="chat-header">
+            <div className="ia_image">
+              <img alt="image" src="/ai.svg" className="home-image14"></img>
+            </div>
             <div className="header_text">
               <h4>Customer Support Agent</h4>
               <h6> Online</h6>
             </div>
             <div>
               <button onClick={() => setIsOpen(false)} className="close-button">
-                ×
+                x
               </button>
             </div>
           </div>
