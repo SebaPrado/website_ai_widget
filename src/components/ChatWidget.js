@@ -20,12 +20,12 @@ const ChatWidget = ({ apiKey }) => {
 
     try {
       const response = await fetch(
-        "https://d773-151-19-69-217.ngrok-free.app/script_chat",
+        "https://seba-whatsapp-agent.vercel.app/script_chat",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
+            // Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
             messages: text_userMessage, // Enviar el historial de mensajes como array
