@@ -1,0 +1,34 @@
+website_agentAI_script/
+│
+├── src/                  # Código fuente de desarrollo
+│   ├── components/       # Componentes React
+│   │   └── ChatWidget.js # Componente principal del chat
+│   ├── styles/          # Archivos CSS
+│   │   └── widget.css   # Estilos del widget
+│   └── widget.js        # Punto de entrada principal
+│
+├── public/              # Archivos estáticos para desarrollo
+│   └── index.html       # Página HTML para pruebas en desarrollo
+│
+├── dist/                # Archivos generados para producción
+│   ├── widget.js        # Widget compilado y minificado
+│   └── index.html       # Página HTML generada automáticamente
+│
+├── node_modules/        # Dependencias instaladas
+├── package.json         # Configuración del proyecto
+├── webpack.config.js    # Configuración de webpack
+└── .babelrc            # Configuración de Babel
+
+
+; //=============================================================//
+
+En el sitio web del cliente :
+
+<script src="https://tu-dominio.com/widget.js"></script>
+<script>
+    window.initAIChat({
+        apiKey: 'CLAVE_API_DEL_CLIENTE'
+    });
+</script>
+
+; //=============================================================//
