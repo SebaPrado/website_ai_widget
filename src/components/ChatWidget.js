@@ -21,8 +21,9 @@ const ChatWidget = ({ apiKey }) => {
     try {
       const response = await fetch(
         "https://seba-whatsapp-agent.vercel.app/script_chat",
+        // "https://7275-151-47-181-171.ngrok-free.app/script_chat",
         {
-          method: "POST",
+           method: "POST",
           headers: {
             "Content-Type": "application/json",
             // Authorization: `Bearer ${apiKey}`,
