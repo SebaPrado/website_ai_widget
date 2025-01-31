@@ -63,7 +63,7 @@
 }
 
 .message.user {
-  background: #b2dcfa;
+  background: #ecf5fc;
   margin-left: auto;
   box-shadow: 2px 2px 5px #7fb9f7;
   
@@ -81,7 +81,6 @@
   /* background-color: gold; */
 }
 .input{
-
 }
 .chat-input input {
   flex-grow: 1;
@@ -116,6 +115,7 @@
 
 .send_button{
     border-radius: 10px;
+    background-color: #0358b2;
 }
 
 .close-button_div{
