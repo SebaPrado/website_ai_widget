@@ -24,6 +24,8 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  /* background-color: rgb(191, 255, 0); */
+
 }
 .chat-header h4 {
   color: white;
@@ -96,9 +98,14 @@
   color: white;
   background: none;
   border: none;
-  font-size: 12px;
+  font-size: 15px;
   cursor: pointer;
+  margin-bottom: 19px;
   /* background-color: green; */
+}
+
+.close-button_div{
+    /* background-color: greenyellow; */
 }
 
 .ia_image {

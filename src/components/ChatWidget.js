@@ -65,7 +65,7 @@ const ChatWidget = ({ apiKey }) => {
               <h4>Customer Support Agent</h4>
               <h6> Online</h6>
             </div>
-            <div>
+            <div className="close-button_div">
               <button onClick={() => setIsOpen(false)} className="close-button">
                 x
               </button>
