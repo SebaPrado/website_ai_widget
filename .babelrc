@@ -1,4 +1,4 @@
-
+// archivo de configuración de Babel (.babelrc)
 {
     "presets": [
       "@babel/preset-env",
