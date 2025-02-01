@@ -80,15 +80,14 @@
   display: flex;
   /* background-color: gold; */
 }
-.input{
-}
+
 .chat-input input {
   flex-grow: 1;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 10px;
   margin-right: 10px;
-  min-height: 40px;
+  min-height: 22px;
   /* background-color: greenyellow; */
 
 }
@@ -118,13 +117,6 @@
     background-color: #0358b2;
 }
 
-.close-button_div{
-    /* background-color: greenyellow; */
-}
-
-.ia_image {
-  /* background-color: greenyellow; */
-}
 .send{
     height: 14px;
     width: 30px;

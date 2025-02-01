@@ -3,6 +3,9 @@
 
 import React, { useState } from "react";
 import "../styles/widget.css";
+import sendIcon from '../components/send.svg';
+import aiIcon from '../components/ai.svg';
+
 
 const ChatWidget = ({ apiKey }) => {
   const [messages, setMessages] = useState([]);
@@ -62,7 +65,7 @@ const ChatWidget = ({ apiKey }) => {
         <div className="chat-container">
           <div className="chat-header">
             <div className="ia_image">
-              <img alt="image" src="\ai.svg" className="home-image14"></img>
+              <img alt="image" src={aiIcon} className="home-image14"></img>
             </div>
             <div className="header_text">
               <h4>Customer Support Agent</h4>
@@ -102,7 +105,7 @@ const ChatWidget = ({ apiKey }) => {
               }}
             >
               <div className="ia_image">
-              <img alt="image" src="/send.svg" className="send"></img>
+              <img alt="image" src={sendIcon} className="send"></img>
             </div>
             </button>
           </div>
@@ -110,7 +113,7 @@ const ChatWidget = ({ apiKey }) => {
       ) : (
         <button className="chat-trigger" onClick={() => setIsOpen(true)}>
            <div className="ia_image">
-              <img alt="image" src="/ai.svg" className="home-image14"></img>
+              <img alt="image" src={aiIcon} className="home-image14"></img>
             </div>
         </button>
       )}
