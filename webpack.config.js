@@ -1,4 +1,3 @@
-// webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -12,6 +11,8 @@ module.exports = {
     libraryTarget: "umd",
     library: "AIChat",
     umdNamedDefine: true,
+    globalObject: "this", // Añadido para asegurar compatibilidad cross-platform
+    publicPath: "/", // Añadido para asegurar rutas correctas
   },
   module: {
     rules: [
