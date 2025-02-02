@@ -49,8 +49,8 @@ const ChatWidget = ({ apiKey }) => {
 
     try {
       const response = await fetch(
-        // "https://seba-whatsapp-agent.vercel.app/script_chat",
-        "https://fabf-151-46-191-130.ngrok-free.app/script_chat",
+        "https://seba-whatsapp-agent.vercel.app/script_chat",
+        // "https://fabf-151-46-191-130.ngrok-free.app/script_chat",
         {
           method: "POST",
           headers: {
