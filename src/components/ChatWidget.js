@@ -103,7 +103,7 @@ const ChatWidget = ({ apiKey }) => {
         <div className="chat-container">
           <div className="chat-header">
             <div className="ia_image">
-              <img alt="image" src={aiIcon} className="home-image14" />
+              <img alt="image" src={aiIcon} className="" />
             </div>
             <div className="header_text">
               <h4>Customer Support Agent</h4>
