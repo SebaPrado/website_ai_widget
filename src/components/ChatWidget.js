@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../styles/widget.css";
 import sendIcon from "../components/send.svg";
 import aiIcon from "../components/ai.svg";
@@ -9,6 +9,7 @@ const ChatWidget = ({ apiKey }) => {
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [thread_id, setThread_id] = useState("");
+  const messagesEndRef = useRef(null);
 
   // Función para generar un ID único
   //   const generateUniqueId = () => {
@@ -87,6 +88,15 @@ const ChatWidget = ({ apiKey }) => {
     }
   };
 
+  // Función para desplazar el contenedor hacia abajo
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom(); // Desplazar hacia abajo cada vez que se actualizan los mensajes
+  }, [messages]);
+
   return (
     <div className="ai-chat-widget">
       {isOpen ? (
@@ -111,6 +121,7 @@ const ChatWidget = ({ apiKey }) => {
                 {msg.content}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
           <div className="chat-input">
             <input

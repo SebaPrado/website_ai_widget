@@ -65,7 +65,7 @@
 .message.user {
   background: #ecf5fc;
   margin-left: auto;
-  box-shadow: 2px 2px 5px #7fb9f7;
+  box-shadow: 2px 1px 3px #7fb9f7;
   
 }
 
@@ -121,3 +121,10 @@
     height: 14px;
     width: 30px;
 }
+
+/* -----------    scroll bar   ---------- */
+    .chat-messages {
+    scrollbar-width:thin ;
+    scroll-behavior: smooth;
+    scrollbar-color: hsla(256, 88%, 25%, 0.201) #fafafa; /* Color de la parte que se puede mover y el fondo */
+  }
