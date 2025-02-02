@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/widget.css";
 import sendIcon from "../components/send.svg";
 import aiIcon from "../components/ai.svg";
@@ -7,27 +7,67 @@ const ChatWidget = ({ apiKey }) => {
   const [messages, setMessages] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("");
+  const [sessionId, setSessionId] = useState(null);
+  const [thread_id, setThread_id] = useState("");
+
+  // Función para generar un ID único
+  //   const generateUniqueId = () => {
+  //     return Date.now().toString(36) + Math.random().toString(36).substring(2);
+  //   };
+
+  //   // Función para inicializar la sesión del chat
+  //   const initializeChat = () => {
+  //     // Verificamos si ya existe una sesión
+  //     let existingSessionId = sessionStorage.getItem("chatSessionId");
+
+  //     if (!existingSessionId) {
+  //       existingSessionId = generateUniqueId();
+  //       sessionStorage.setItem("chatSessionId", existingSessionId);
+
+  //       // Aquí podrías hacer una llamada al backend para inicializar la sesión
+  //       // initializeChatSession(existingSessionId);
+  //     }
+  //     setSessionId(existingSessionId);
+  //     return existingSessionId;
+  //   };
+
+  // useEffect para inicializar la sesión cuando el componente se monta
+  //   useEffect(() => {
+  //     const currentSessionId = initializeChat();
+  //     console.log("Sesión inicializada:", currentSessionId);
+  //   }, []);
 
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
+    // if (!sessionId) {
+    //   console.error("No hay sesión activa");
+    //   return;
+    // }
 
     // Agregar el mensaje del usuario a la lista de mensajes
     setMessages((prev) => [...prev, { role: "user", content: text }]);
 
     try {
       const response = await fetch(
-        "https://seba-whatsapp-agent.vercel.app/script_chat",
+        // "https://seba-whatsapp-agent.vercel.app/script_chat",
+        "https://fabf-151-46-191-130.ngrok-free.app/script_chat",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             // Authorization: `Bearer ${apiKey}`,
           },
-          body: JSON.stringify({ messages: text }), // Se envía directamente el texto
+          body: JSON.stringify({
+            messages: text,
+            // new_chat:  new_chat,
+            sessionId: sessionId,
+            thread_id: thread_id,
+          }),
         }
       );
 
       const data = await response.json();
+      setThread_id(data.threadId);
       setMessages((prev) => [
         ...prev,
         {
@@ -110,7 +150,6 @@ const ChatWidget = ({ apiKey }) => {
 };
 
 export default ChatWidget;
-
 
 //
 //
