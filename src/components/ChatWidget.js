@@ -152,7 +152,7 @@ const ChatWidget = ({ apiKey }) => {
       ) : (
         <button className="chat-trigger" onClick={() => setIsOpen(true)}>
           <div className="ia_image">
-            <img alt="image" src={aiIcon} className="home-image14" />
+            <img alt="image" src={aiIcon} className="" />
           </div>
         </button>
       )}
