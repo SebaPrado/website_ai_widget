@@ -13,4 +13,3 @@ window.initAIChat = function (config) {
   root.render(<ChatWidget />);
 };
 
-// root.render(<ChatWidget apiKey={config.apiKey} />);
