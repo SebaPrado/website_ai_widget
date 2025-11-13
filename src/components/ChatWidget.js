@@ -3,7 +3,7 @@ import "../styles/widget.css";
 import sendIcon from "../components/send.svg";
 import aiIcon from "../components/ai.svg";
 
-const ChatWidget = ({ apiKey }) => {
+const ChatWidget = ({ apiKey, position = "right" })  => {
   const [messages, setMessages] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("");
@@ -72,7 +72,15 @@ const ChatWidget = ({ apiKey }) => {
   }, [messages]);
 
   return (
-    <div className="ai-chat-widget">
+    <div
+    className="ai-chat-widget"
+    style={{
+      position: "fixed",
+      bottom: "30px",
+      [position]: "40px", // si position="left", quedará en la izquierda
+      zIndex: 9999,
+    }}
+  >
       {isOpen ? (
         <div className="chat-container">
           <div className="chat-header">
