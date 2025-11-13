@@ -10,6 +10,6 @@ window.initAIChat = function (config) {
   document.body.appendChild(container);
 
   const root = createRoot(container);
-  root.render(<ChatWidget />);
+  root.render(<ChatWidget apiKey={config?.apiKey} />);
 };
 
