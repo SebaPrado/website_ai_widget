@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        exclude: /public/,
         type: 'asset/inline',  // Esto convertirá los SVG a base64
       }
     ],
@@ -38,6 +40,18 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "public",
+          to: ".",
+          filter: (resourcePath) => {
+            // Copiar todos los archivos excepto index.html (que se maneja con HtmlWebpackPlugin)
+            return !resourcePath.endsWith("index.html");
+          },
+        },
+      ],
     }),
     new Dotenv(),
   ],
