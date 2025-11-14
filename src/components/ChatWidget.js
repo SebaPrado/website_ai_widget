@@ -91,7 +91,8 @@ const ChatWidget = ({ apiKey, position = "right" })  => {
     
     while (attempts < maxAttempts) {
       try {
-        // Llamar al endpoint de verificación
+        console.log(`⏳ Intento ${attempts + 1}: consultando estado...`);
+        
         const checkResponse = await fetch(
           "https://seba-whatsapp-agent.vercel.app/script_chat_check",
           {
@@ -105,32 +106,41 @@ const ChatWidget = ({ apiKey, position = "right" })  => {
             }),
           }
         );
-  
+
         const checkData = await checkResponse.json();
-  
-        // Si está completado, retornar la respuesta
+        
+        // Log más detallado del estado
+        console.log(`📊 Estado recibido:`, checkData.status);
+
         if (checkData.status === "completed") {
+          console.log("✅ Respuesta completada exitosamente");
           return checkData.response;
         }
-  
-        // Si falló, lanzar error
+
         if (checkData.status === "failed") {
-          throw new Error(checkData.error || "El procesamiento falló");
+          // ⭐ NUEVO: Extraer información detallada del error
+          console.error("❌ Error detallado del run:", checkData.errorDetails);
+          
+          // Crear un mensaje de error más útil para el usuario
+          const errorMsg = checkData.errorDetails?.last_error 
+            ? `Error de OpenAI: ${checkData.errorDetails.last_error.message}`
+            : checkData.error || "El procesamiento falló";
+          
+          throw new Error(errorMsg);
         }
-  
-        // Si aún está procesando, esperar 2 segundos y volver a intentar
-        console.log(`⏳ Intento ${attempts + 1}: aún procesando...`);
+
+        // Si aún está procesando, esperar y continuar
+        console.log(`⏸️  Estado: ${checkData.status}, esperando 2 segundos...`);
         await new Promise((resolve) => setTimeout(resolve, 2000));
         attempts++;
         
       } catch (error) {
-        console.error("Error en polling:", error);
+        console.error("🚨 Error en polling:", error);
         throw error;
       }
     }
-  
-    // Si llegamos aquí, se agotaron los intentos
-    throw new Error("El procesamiento está tomando demasiado tiempo");
+
+    throw new Error("El procesamiento está tomando demasiado tiempo (más de 60 segundos)");
   };
 
   // Función para desplazar el contenedor hacia abajo
