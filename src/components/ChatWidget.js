@@ -14,52 +14,123 @@ const ChatWidget = ({ apiKey, position = "right" })  => {
 
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
-    // if (!sessionId) {
-    //   console.error("No hay sesión activa");
-    //   return;
-    // }
-
-    // Agregar el mensaje del usuario a la lista de mensajes
+  
+    // Agregar el mensaje del usuario
     setMessages((prev) => [...prev, { role: "user", content: text }]);
-
+  
+    // Agregar un mensaje temporal de "escribiendo..."
+    const tempMessageId = Date.now();
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "Escribiendo...",
+        isTemp: true,
+        id: tempMessageId,
+      },
+    ]);
+  
     try {
-      const response = await fetch(
+      // PASO 1: Iniciar la conversación - esto retorna inmediatamente
+      const initResponse = await fetch(
         "https://seba-whatsapp-agent.vercel.app/script_chat",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Si tu backend espera la apiKey en headers, descomenta:
-            // "Authorization": `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
             messages: text,
             sessionId: sessionId,
             thread_id: thread_id,
-            assistantId: apiKey, // <- aquí pasamos el apiKey como assistantId
+            assistantId: apiKey,
           }),
         }
       );
-
-      const data = await response.json();
-      setThread_id(data.threadId);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: data.response,
-        },
-      ]);
+  
+      const initData = await initResponse.json();
+      
+      // Guardamos el threadId para futuras conversaciones
+      setThread_id(initData.threadId);
+      
+      // PASO 2: Hacer polling hasta obtener la respuesta final
+      const finalResponse = await pollForResponse(
+        initData.processing_Run_Id,
+        initData.threadId
+      );
+  
+      // PASO 3: Reemplazar el mensaje temporal con la respuesta real
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === tempMessageId
+            ? { role: "assistant", content: finalResponse }
+            : msg
+        )
+      );
+      
     } catch (error) {
       console.error("Error:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "system",
-          content: "Lo siento, hubo un error al procesar tu mensaje.",
-        },
-      ]);
+      
+      // Reemplazar el mensaje temporal con un mensaje de error
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === tempMessageId
+            ? {
+                role: "system",
+                content: "Lo siento, hubo un error al procesar tu mensaje.",
+              }
+            : msg
+        )
+      );
     }
+  };
+  
+  // Función auxiliar para hacer polling
+  const pollForResponse = async (runId, threadId, maxAttempts = 30) => {
+    let attempts = 0;
+    
+    while (attempts < maxAttempts) {
+      try {
+        // Llamar al endpoint de verificación
+        const checkResponse = await fetch(
+          "https://seba-whatsapp-agent.vercel.app/script_chat_check",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              runId: runId,
+              threadId: threadId,
+            }),
+          }
+        );
+  
+        const checkData = await checkResponse.json();
+  
+        // Si está completado, retornar la respuesta
+        if (checkData.status === "completed") {
+          return checkData.response;
+        }
+  
+        // Si falló, lanzar error
+        if (checkData.status === "failed") {
+          throw new Error(checkData.error || "El procesamiento falló");
+        }
+  
+        // Si aún está procesando, esperar 2 segundos y volver a intentar
+        console.log(`⏳ Intento ${attempts + 1}: aún procesando...`);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        attempts++;
+        
+      } catch (error) {
+        console.error("Error en polling:", error);
+        throw error;
+      }
+    }
+  
+    // Si llegamos aquí, se agotaron los intentos
+    throw new Error("El procesamiento está tomando demasiado tiempo");
   };
 
   // Función para desplazar el contenedor hacia abajo
