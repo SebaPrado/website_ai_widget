@@ -3,9 +3,14 @@ import "../styles/widget.css";
 import sendIcon from "../components/send.svg";
 import aiIcon from "../components/ai.svg";
 
-const ChatWidget = ({ apiKey, position = "right" })  => {
+const ChatWidget = ({ 
+  apiKey, 
+  position = "right", 
+  mountMode = "floating", // Nuevo parámetro
+  openByDefault = false //  Para abrir automáticamente
+}) => {
   const [messages, setMessages] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(openByDefault); // Usar el valor recibido
   const [inputText, setInputText] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [thread_id, setThread_id] = useState("");
@@ -152,16 +157,32 @@ const ChatWidget = ({ apiKey, position = "right" })  => {
     scrollToBottom(); // Desplazar hacia abajo cada vez que se actualizan los mensajes
   }, [messages]);
 
+  // 🧠 DECISIÓN 2: ¿Qué estilos aplico según mi modo?
+  const getContainerStyles = () => {
+    if (mountMode === "floating") {
+      // Modo flotante: position fixed como antes
+      return {
+        position: "fixed",
+        bottom: "30px",
+        [position]: "40px",
+        zIndex: 9999,
+      };
+    } else {
+      // Modo embebido: me comporto como parte natural del contenedor
+      return {
+        position: "relative", // O "static" si prefieres
+        width: "100%", // Ocupo todo el ancho del contenedor padre
+        margin: "0 auto", // Centro si es necesario
+        // No necesito bottom, right, left porque estoy dentro de un contenedor
+      };
+    }
+  };
+
   return (
     <div
-    className="ai-chat-widget"
-    style={{
-      position: "fixed",
-      bottom: "30px",
-      [position]: "40px", // si position="left", quedará en la izquierda
-      zIndex: 9999,
-    }}
-  >
+      className="ai-chat-widget"
+      style={getContainerStyles()} // Uso la función que decide los estilos
+    >
       {isOpen ? (
         <div className="chat-container">
           <div className="chat-header">
