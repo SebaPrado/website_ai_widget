@@ -1,10 +1,10 @@
-.ai-chat-widget {
+/* .ai-chat-widget {
   position: fixed;
   bottom: 30px;
   right: 40px;
   z-index: 9999;
   font-family: Arial, sans-serif;
-}
+/* } */
 
 .chat-container {
   width: 300px;
