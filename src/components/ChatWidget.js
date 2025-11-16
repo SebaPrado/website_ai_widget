@@ -38,7 +38,8 @@ const ChatWidget = ({
     try {
       // PASO 1: Iniciar la conversación - esto retorna inmediatamente
       const initResponse = await fetch(
-        "https://seba-whatsapp-agent.vercel.app/script_chat",
+        // "https://seba-whatsapp-agent.vercel.app/script_chat",
+        "http://localhost:3000/script_chat",
         {
           method: "POST",
           headers: {
@@ -99,7 +100,8 @@ const ChatWidget = ({
         console.log(`⏳ Intento ${attempts + 1}: consultando estado...`);
         
         const checkResponse = await fetch(
-          "https://seba-whatsapp-agent.vercel.app/script_chat_check",
+          // "https://seba-whatsapp-agent.vercel.app/script_chat_check",
+          "http://localhost:3000/script_chat_check",
           {
             method: "POST",
             headers: {
@@ -149,13 +151,22 @@ const ChatWidget = ({
   };
 
   // Función para desplazar el contenedor hacia abajo
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+ // En ChatWidget.jsx - alrededor de la línea 102
 
-  useEffect(() => {
-    scrollToBottom(); // Desplazar hacia abajo cada vez que se actualizan los mensajes
-  }, [messages]);
+const scrollToBottom = () => {
+  // 🎯 Solución: scroll solo DENTRO del contenedor de mensajes
+  const messagesContainer = messagesEndRef.current?.parentElement;
+  if (messagesContainer) {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+};
+
+useEffect(() => {
+  // Solo hacer scroll si hay mensajes (evita scroll innecesario al montar)
+  if (messages.length > 0) {
+    scrollToBottom();
+  }
+}, [messages]);
 
   // 🧠 DECISIÓN 2: ¿Qué estilos aplico según mi modo?
   const getContainerStyles = () => {
@@ -173,7 +184,7 @@ const ChatWidget = ({
         position: "relative", // O "static" si prefieres
         width: "100%", // Ocupo todo el ancho del contenedor padre
         margin: "0 auto", // Centro si es necesario
-        // No necesito bottom, right, left porque estoy dentro de un contenedor
+        maxWidth: "500px",
       };
     }
   };

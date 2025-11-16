@@ -1,10 +1,10 @@
-/* .ai-chat-widget {
-  position: fixed;
-  bottom: 30px;
-  right: 40px;
+ .ai-chat-widget {
+  /* position: fixed; */
+  /* bottom: 30px; */
+  /* right: 40px; */
   z-index: 9999;
   font-family: Arial, sans-serif;
-/* } */
+ } 
 
 .chat-container {
   width: 300px;
@@ -24,6 +24,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  width: 100%;
   /* background-color: rgb(191, 255, 0); */
 
 }
@@ -92,10 +93,10 @@
 
 }
 
+/* -------------------   boton trigger    ------------------- */
 .chat-trigger {
   padding: 10px 20px;
   background: #01356d;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
